@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Header from './components/Header' // ./components/ must be used here as it's a folder containing components
+import Header from './components/Header'
 import Footer from './components/Footer'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
@@ -21,21 +21,21 @@ function App() {
 
     // Fetch all tasks
     const fetchTasks = async () => {
-      const res = await fetch('http://localhost:5000/tasks')
+      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks`)
       const data = await res.json()
       return data
     }
     
     // Fetch specific task
     const fetchTask = async (id) => {
-      const res = await fetch(`http://localhost:5000/tasks/${id}`)
+      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks/${id}`)
       const data = await res.json()
       return data
     }
 
     // Add Task
     const addTask = async (task) => {
-      const res = await fetch('http://localhost:5000/tasks', { 
+      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks`, { 
           method: 'POST', 
           headers: { 'Content-type': 'application/json' },
           body: JSON.stringify(task)
@@ -43,15 +43,11 @@ function App() {
 
         const data = await res.json()
         setTasks([...tasks, data])
-
-      /*const id = Math.floor(Math.random() * 10000) + 1 // Giving new task random ID 
-      const newTask = {id, ...task } // newTask = [(new id), task.text, task.day, task.reminder]
-      setTasks([...tasks, newTask]) */
     }
 
     // Delete Task
     const deleteTask = async (id) => {
-      await fetch(`http://localhost:5000/tasks/${id}`, { method: 'DELETE' })
+      await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks/${id}`, { method: 'DELETE' })
 
       setTasks(tasks.filter((task) => task.id !== id))
     }
@@ -61,7 +57,7 @@ function App() {
       const taskToToggle = await fetchTask(id)
       const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
 
-      const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(updTask)
@@ -96,18 +92,4 @@ function App() {
     )
 }
 
-export default App; // Exports App.js so it can be launched and hosted as a webpage
-
-
-/*
-'npm start' in terminal for react dev server
-'npm run build' to build production version
-'npm install -g' to install npm serve package globally if necessary
-'serve -s build' to host build production locally (add -p (port) for a specific port)
-
-'npm i json-server' 
-"server": "json-server --watch db.json --port 5000" must be in package.json/scripts 
-'npm run server'
-
-'npm i react-router-dom' for routing
-*/
+export default App;

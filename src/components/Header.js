@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import Button from './Button' // Tells JS to import values that we'll need to use later. Without this values/variables will not be understood
+import Button from './Button'
 import { useLocation } from 'react-router-dom'
 
-const Header = ({ title, onAdd, showAdd }) => { // Creating the page header
+const Header = ({ title, onAdd, showAdd }) => {
     const location = useLocation()
     
     return ( 
@@ -14,15 +14,15 @@ const Header = ({ title, onAdd, showAdd }) => { // Creating the page header
                 onClick={onAdd}
             />} 
         </header>
-    ) // Returns a single element with child elements
+    )
 }
 
-Header.defaultProps = { // Default title is set to 'Task Tracker' if no other value is set
+Header.defaultProps = { 
     title: 'Task Tracker'
 }
 
-Header.propTypes = { // Only valid input for text is string, if anything other than a string passed, console throws an error
+Header.propTypes = { 
     text: PropTypes.string
 }
 
-export default Header // Exports Header.js so it can be imported in other components
+export default Header 
