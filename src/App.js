@@ -21,21 +21,21 @@ function App() {
 
     // Fetch all tasks
     const fetchTasks = async () => {
-      const res = await fetch(`http://localhost:${ process.env.PORT || 5000}/tasks`)
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/tasks`)
       const data = await res.json()
       return data
     }
     
     // Fetch specific task
     const fetchTask = async (id) => {
-      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks/${id}`)
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/tasks`)
       const data = await res.json()
       return data
     }
 
     // Add Task
     const addTask = async (task) => {
-      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks`, { 
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/tasks`, { 
           method: 'POST', 
           headers: { 'Content-type': 'application/json' },
           body: JSON.stringify(task)
@@ -47,7 +47,7 @@ function App() {
 
     // Delete Task
     const deleteTask = async (id) => {
-      await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks/${id}`, { method: 'DELETE' })
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/tasks/${id}`, { method: 'DELETE' })
 
       setTasks(tasks.filter((task) => task.id !== id))
     }
@@ -57,7 +57,7 @@ function App() {
       const taskToToggle = await fetchTask(id)
       const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
 
-      const res = await fetch(`http://localhost:${ process.env.PORT || 5000 }/tasks/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(updTask)
